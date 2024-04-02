@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import useToast from "../hooks/useToast";
 import { getDocs, query, where } from "firebase/firestore";
 import moment from "moment";
+import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
+import { generateMeetingId } from '../utils/generateMeetingId';
 
 export default function JoinMeeting() {
  
@@ -84,9 +86,39 @@ export default function JoinMeeting() {
         };
         getMeetingData();
       }, [params.id, user, userLoaded, createToast, navigate]);
+      const appId=100678314;
+      const serverSecret="114112e9ed2a67dd3af06d42938cdf9e";
+      const myMeeting=async(element:any)=>{
+        const kitToken=ZegoUIKitPrebuilt.generateKitTokenForTest(
+          appId,
+          serverSecret,
+          params.id as string,
+          user.uid ? user.uid : generateMeetingId(),
+          user.displayName ? user.displayName: generateMeetingId()
+        );
+          const zp=ZegoUIKitPrebuilt.create(kitToken);
+          zp.joinRoom({
+            container:element,
+            maxUsers:50,
+            sharedLinks:[
+              {
+                name:"Personal Link",
+                url:window.location.origin,
+              },
+            ],
+            scenario:{
+              mode:ZegoUIKitPrebuilt.VideoConference,
+            }
+          })
+      }
+
   return (
     <div>
+      {isAllowed && (
+    <div className='myCallContainer' ref={myMeeting} style={{width:"100%" , height:"100vh"}}>
       
+    </div>
+    )}
     </div>
   )
 }
