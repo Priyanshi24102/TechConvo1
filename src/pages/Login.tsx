@@ -1,6 +1,6 @@
 import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiImage, EuiPanel, EuiProvider, EuiSpacer, EuiText, EuiTextColor } from '@elastic/eui'
 import React from 'react'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.jpeg'
 
 import animation from '../assets/animation.gif'
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
@@ -50,7 +50,7 @@ function Login() {
           <EuiPanel paddingSize='xl'>
             <EuiFlexGroup justifyContent='center' alignItems='center'>
             <EuiFlexItem>
-          <EuiImage src={animation} alt="logo"/>
+          {/* <EuiImage src={animation} alt="logo"/> */}
         </EuiFlexItem>
         <EuiFlexItem>
           <EuiImage src={logo} alt="logo" size="230px"/>
